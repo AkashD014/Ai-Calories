@@ -84,7 +84,7 @@ app.get("/auth/google", passport.authenticate("google", {
 
 app.get("/auth/google/callback",
   passport.authenticate("google", {
-    failureRedirect: "/login"
+    failureRedirect:"https://ai-calories-six.vercel.app"
   }),
   (req, res) => {
   res.redirect("https://ai-calories-six.vercel.app");
@@ -196,7 +196,7 @@ Rules:
 app.use(express.static(__dirname));
 
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "index1.html"));
+  res.sendFile(path.join(__dirname, "index.html"));
 });
 
 
