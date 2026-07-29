@@ -11,12 +11,15 @@ const { GoogleGenAI } = require("@google/genai");
 const crypto = require("crypto");
 
 const app = express();
-const PORT = 5500;
+const PORT = process.env.PORT || 5500;
 
 // Trust Replit's reverse proxy so HTTPS cookies work correctly
 app.set("trust proxy", 1);
 
-app.use(cors({ origin: true, credentials: true }));
+app.use(cors({
+  origin: "https://ai-calories-six.vercel.app",
+  credentials: true
+}));
 app.use(express.json({ limit: "10mb" }));
 
 // ── Session ──
@@ -46,7 +49,7 @@ if (GOOGLE_CLIENT_ID && GOOGLE_CLIENT_SECRET) {
       {
         clientID: GOOGLE_CLIENT_ID,
         clientSecret: GOOGLE_CLIENT_SECRET,
-        callbackURL: "http://localhost:5500/auth/google/callback"
+        callbackURL: "https://ai-calories-zn0k.onrender.com/auth/google/callback"
       },
       (accessToken, refreshToken, profile, done) => {
         const user = {
