@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Camera Calorie Detector</title>
+  <style>
+    body {
+      font-family: Arial;
+      text-align: center;
+      background: #f4f4f4;
+    }
+    video, canvas {
+      width: 300px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+    button {
+      padding: 10px;
+      margin: 10px;
+      background: green;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    button:hover {
+      background: darkgreen;
+    }
+    #result {
+      font-size: 1.2em;
+      color: #333;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>📸 Calorie Detector</h1>
+
+<video id="camera" autoplay playsinline></video>
+<br>
+<button onclick="capture()">Capture Food</button>
+
+<canvas id="snapshot" style="display:none;"></canvas>
+
+<h3 id="result"></h3>
+
+<script>
+  const video = document.getElementById("camera");
+
+  navigator.mediaDevices.getUserMedia({ video: true })
+    .then(stream => {
+      video.srcObject = stream;
+    })
+    .catch(err => {
+      document.getElementById("result").innerText = "Camera access denied: " + err.message;
+    });
+
+  function capture() {
+    const canvas = document.getElementById("snapshot");
+    const ctx = canvas.getContext("2d");
+
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+
+    ctx.drawImage(video, 0, 0);
+
+    detectFood();
+  }
+
+  function detectFood() {
+    const foods = [
+      { name: "Pizza", calories: 300 },
+      { name: "Burger", calories: 350 },
+      { name: "Apple", calories: 80 },
+      { name: "Rice", calories: 200 }
+    ];
+
+    let random = foods[Math.floor(Math.random() * foods.length)];
+
+    document.getElementById("result").innerText =
+      "Detected: " + random.name + " (" + random.calories + " kcal)";
+  }
+</script>
+
+</body>
+</html>
