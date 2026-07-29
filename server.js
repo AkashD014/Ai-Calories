@@ -87,8 +87,8 @@ app.get("/auth/google/callback",
     failureRedirect: "/login"
   }),
   (req, res) => {
-    res.redirect("/dashboard");
-  }
+  res.redirect("https://ai-calories-six.vercel.app");
+}
 );
 
 app.get("/api/user", (req, res) => {
