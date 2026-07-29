@@ -1200,9 +1200,9 @@
   // Navigate the top-level window so Google OAuth works even inside an iframe
   function googleLogin() {
     try {
-      window.top.location.href = "/auth/google";
+      window.top.location.href = "https://ai-calories-zn0k.onrender.com/auth/google";
     } catch (e) {
-      window.location.href = "/auth/google";
+      window.location.href = "https://ai-calories-zn0k.onrender.com/auth/google";
     }
   }
 
@@ -1266,25 +1266,28 @@
 
   // ── Boot: check session ──
   async function boot() {
-    try {
-      const resp = await fetch("/api/user", { credentials: "include" });
-      const data = await resp.json();
+  try {
+    const resp = await fetch("https://ai-calories-zn0k.onrender.com/api/user", {
+      credentials: "include"
+    });
 
-      if (data.loggedIn) {
-        currentUser = data.user;
-        showApp(data.user);
-      } else {
-        showLogin();
-      }
-    } catch {
+    const data = await resp.json();
+
+    if (data.loggedIn) {
+      currentUser = data.user;
+      showApp(data.user);
+    } else {
       showLogin();
     }
-
-    // Show error from URL
-    if (location.search.includes("error=auth_failed")) {
-      document.getElementById("loginError").classList.add("visible");
-    }
+  } catch {
+    showLogin();
   }
+
+  if (location.search.includes("error=auth_failed")) {
+    document.getElementById("loginError").classList.add("visible");
+  }
+}
+  
 
   function showLogin() {
     document.getElementById("loginPage").classList.add("visible");
@@ -1393,11 +1396,9 @@
 
   async function analyze(imgData) {
     try {
-      const resp = await fetch("/api/analyze", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ imageData: imgData }),
+      const resp = await fetch("https://ai-calories-zn0k.onrender.com/api/user", {
+        method: "GET",
+        credentials: "include"
       });
       if (resp.status === 401) { setLoading(false); setError("Session expired. Please sign in again."); return; }
       if (!resp.ok) { const e = await resp.json().catch(() => ({})); throw new Error(e.error || "Server error"); }
