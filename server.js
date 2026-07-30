@@ -28,9 +28,9 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: "auto",   // auto = secure when behind HTTPS proxy
+    secure: true,   // auto = secure when behind HTTPS proxy
     httpOnly: true,
-    sameSite: "lax",
+    sameSite: "none",
     maxAge: 7 * 24 * 60 * 60 * 1000,
   },
 }));
