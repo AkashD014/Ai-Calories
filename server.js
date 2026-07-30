@@ -84,10 +84,10 @@ app.get("/auth/google", passport.authenticate("google", {
 
 app.get("/auth/google/callback",
   passport.authenticate("google", {
-    failureRedirect:"https://ai-calories-six.vercel.app"
+    failureRedirect:"https://ai-calories-six.vercel.app/"
   }),
   (req, res) => {
-  res.redirect("https://ai-calories-six.vercel.app");
+  res.redirect("https://ai-calories-six.vercel.app/");
 }
 );
 
